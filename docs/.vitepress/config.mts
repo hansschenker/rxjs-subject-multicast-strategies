@@ -4,6 +4,7 @@ export default defineConfig({
   title: 'RxJS Subject Multicast Strategies',
   description:
     'Every RxJS multicasting strategy from the multicast era to the configurable share() of RxJS 7 — mechanics, runnable samples, and the migration map.',
+  base: '/rxjs-subject-multicast-strategies/', // GitHub Pages project site
   // Raw research notes live alongside the site source but are not pages:
   srcExclude: ['**/notebooklm-chat-*.md', '**/All_notes_*.md', '**/Demystifying_*.md'],
   themeConfig: {

@@ -11,7 +11,7 @@ A research/prototype project on RxJS Subject multicasting strategies. `docs/` is
 - `npm run dev` — Vite dev server
 - `npm run build` — `tsc` type-check (noEmit) then `vite build`; any TS error fails the build
 - `npm run preview` — serve the production build
-- `npm run docs:dev` / `npm run docs:build` / `npm run docs:preview` — VitePress docs site (guide pages embed the `src/samples/` files via `<<<` snippet imports, so renaming a sample breaks the docs build)
+- `npm run docs:dev` / `npm run docs:build` / `npm run docs:preview` — VitePress docs site; pushes to `main` auto-deploy it to GitHub Pages via `.github/workflows/deploy-docs.yml` (config sets `base: /rxjs-subject-multicast-strategies/`) (guide pages embed the `src/samples/` files via `<<<` snippet imports, so renaming a sample breaks the docs build)
 - There is no `test` script yet. Vitest is installed; when adding the first tests, also add `"test": "vitest"` to package.json. Single file: `npx vitest run path/to/file.test.ts`.
 
 ## TypeScript constraints
