@@ -26,7 +26,9 @@ The **connector supplies the memory policy** — it is the only thing that diffe
 
 A **faithful** port of any `publishX().refCount()` requires `resetOnError: false, resetOnComplete: false, resetOnRefCountZero: false`.
 
-Why: the legacy chain owned exactly **one** Subject instance for its whole life. It never swapped it out — not on error, not on completion, not when the subscriber count hit zero. (Legacy `refCount()` did *disconnect the upstream* at zero, but modern `share` does that too, unconditionally — the flags only govern the Subject's survival.) Any `true` flag therefore introduces behavior the legacy code never had.
+Why: the legacy chain owned exactly **one** Subject instance for its whole life. It never swapped it out — not on error, not on completion, not when the subscriber count hit zero. Any `true` flag therefore introduces behavior the legacy code never had.
+
+One subtle divergence remains even in the all-`false` port, pinned by this repo's specs: legacy `refCount()` *disconnected the upstream* when the count hit zero, while `share` with `resetOnRefCountZero: false` keeps the upstream connected during idle. For sources that complete quickly — the typical cached HTTP call — this is unobservable; for long-lived sources, the modern port keeps consuming while idle where the legacy chain paused. If that matters, there is no flag combination that reproduces "pause upstream at zero but keep the Subject" — reconsider whether you actually want a reset notifier or the defaults.
 
 The corollary: plain `share()` — all resets `true` — is usually **better** behavior than the code you are migrating, but it is not the **same** behavior. Decide explicitly whether you want a faithful port (all `false`) or an upgrade (defaults), and say so in the code review.
 
@@ -36,7 +38,7 @@ The corollary: plain `share()` — all resets `true` — is usually **better** b
 // Legacy (deprecated, still works in RxJS 7):
 const cached$ = source$.pipe(publishReplay(1), refCount());
 
-// Faithful modern port — identical observable behavior:
+// Faithful modern port — identical terminal behavior (see idle caveat above):
 const cached$ = source$.pipe(
   share({
     connector: () => new ReplaySubject(1),

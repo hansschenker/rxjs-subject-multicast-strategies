@@ -13,7 +13,10 @@ share({
 })
 ```
 
-`share()` with no arguments keeps its [classic behavior](/guide/share-classic) — all resets `true`, plain `Subject`. Note that regardless of `resetOnRefCountZero`, `share` always *disconnects from the upstream source* when the subscriber count hits zero; the flag only decides whether the **Subject and its state** survive to the next subscriber.
+`share()` with no arguments keeps its [classic behavior](/guide/share-classic) — all resets `true`, plain `Subject`. Two facts about the flags are easy to get wrong, and both are pinned by this repo's Vitest specs (`npm test`):
+
+- **`resetOnRefCountZero: false` keeps the upstream *connected* while nobody is subscribed.** Values keep flowing into the retained Subject during idle — exactly the `shareReplay` leak. Only `true` (or a notifier) disconnects and discards at zero.
+- **After a terminal event, only the matching terminal flag matters.** A Subject retained by `resetOnComplete: false` or `resetOnError: false` can never be evicted by subscribers leaving — the refCount-zero reset applies only *before* a terminal event.
 
 ## The 8 reset profiles
 
@@ -23,11 +26,11 @@ The three booleans `[resetOnRefCountZero, resetOnComplete, resetOnError]` yield 
 |---|---|---|
 | `[t, t, t]` | **Clean-slate broadcast** (default) | Transient realtime data — WebSocket feeds, mouse moves, telemetry. Fresh Subject and fresh upstream for every wave of subscribers. |
 | `[f, f, t]` | **Resilient Static Cache** | *The* headline production pattern, paired with `ReplaySubject(1)`: **cache success, retry failure.** Success is retained forever; an error discards the Subject so the next subscriber retries. |
-| `[t, f, f]` | **Garbage-collected UI state cache** | SPA screen caching: terminal state is held while components are mounted; the last unmount evicts it, so returning to the screen refetches. |
-| `[f, f, f]` | **Permanent application singleton** | One-time startup work (config, session bootstrap) where failure is fatal and retry is deliberately banned. The terminal state is locked in forever. |
-| `[t, f, t]` | Completed-cache with unsubscription eviction | Like the GC cache but stricter on errors: errors reset immediately. |
-| `[f, t, t]` | Reconnecting source with state continuity | Idle disconnects the upstream but keeps the Subject; a caching connector then hands late arrivals history while reconnecting. |
-| `[t, t, f]` | Temporary error lock | An error is held as fatal for current subscribers, but clears once everyone leaves. |
+| `[t, f, f]` | **Terminal-state cache** | Once the source completes *or* errors, that terminal state is cached permanently — subscribers leaving cannot evict it. The `t` matters only mid-stream: abandon the stream before any terminal event and it resets. |
+| `[f, f, f]` | **Permanent application singleton** | One-time startup work (config, session bootstrap) where failure is fatal and retry is deliberately banned. The terminal state is locked in forever, and the upstream stays connected while idle. |
+| `[t, f, t]` | Completed-state cache, error resets | A successful completion is cached permanently; an error resets for retry; abandoning the stream mid-flight resets. |
+| `[f, t, t]` | Live idle cache | Idle keeps the Subject **and the upstream connection** alive — values produced while nobody listens are captured and replayed to the next subscriber. Any terminal event resets. |
+| `[t, t, f]` | Error lock | An error is locked in permanently — subscribers leaving cannot clear it. A successful completion resets; abandoning mid-stream resets. |
 | `[f, t, f]` | *The theoretical outlier* | Resets on **success**, permanently locks on **failure** — the exact inverse of resilience. Virtually zero real-world use. |
 
 ## Reset notifiers — beyond true/false
@@ -53,4 +56,6 @@ Expected output, first section: attempt&nbsp;#1 fails and A sees the error; B tr
 
 ## Choosing a profile
 
-Start from the default. Reach for `[f, f, t]` + `ReplaySubject(1)` when the source is a finite fetch worth caching. Reach for `[t, f, f]` when UI demand should garbage-collect the cache. Reach for `[f, f, f]` only when a retry would be *wrong*. If you find yourself wanting anything else, write down which of the three lifecycle events should discard state — the flags then write themselves.
+Start from the default. Reach for `[f, f, t]` + `ReplaySubject(1)` when the source is a finite fetch worth caching. Reach for `[t, f, f]` when terminal results should be cached for good but an abandoned in-flight stream should start over. Reach for `[f, f, f]` only when a retry would be *wrong*. If you find yourself wanting anything else, write down which of the three lifecycle events should discard state — the flags then write themselves.
+
+Every row of the table above is executable: `src/tests/share-reset-profiles.test.ts` pins all 8 profiles across the three lifecycle events (idle, complete, error) plus the two invariants at the top of this page — run `npm test`.
