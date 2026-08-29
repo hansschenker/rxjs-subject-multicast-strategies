@@ -38,6 +38,8 @@ The manual wiring makes three decisions explicit. Every operator in this guide i
 2. **When does the source start?** Manually, or automatically when the first subscriber arrives (reference counting). This is the *demand policy*.
 3. **When and how does it reset?** Never, on last unsubscribe, on error, on complete — and can it restart with a *fresh* Subject afterwards? This is the *reset policy*. A Subject is single-use: once it errors or completes it is spent forever, so "fresh Subject or not" decides whether a pipeline is restartable.
 
+These three decisions are the configurable axes of a larger model developed on the [Subject Router Algebra](/guide/router-algebra) page.
+
 ## Sample
 
 <<< ../../src/samples/01-cold-unicast-and-the-subject-bridge.ts

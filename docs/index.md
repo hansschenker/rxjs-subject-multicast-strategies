@@ -22,7 +22,7 @@ features:
 
 ## The lineage at a glance
 
-Every generation of the multicasting API automates the same three decisions: **which Subject** (memory), **when to connect** (demand), and **when to reset** (lifecycle). This table is the backbone of the guide — each row links to a page with mechanics and a runnable sample.
+Every generation of the multicasting API automates the same three decisions: **which Subject** (memory), **when to connect** (demand), and **when to reset** (lifecycle). This table is the backbone of the guide — each row links to a page with mechanics and a runnable sample. The model behind the three decisions has its own page: [the Subject Router Algebra](/guide/router-algebra).
 
 | # | Era | Strategy | What it automated / replaced | Lifecycle control |
 |---|-----|----------|------------------------------|-------------------|

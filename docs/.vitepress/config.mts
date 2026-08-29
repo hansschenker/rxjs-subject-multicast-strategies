@@ -15,7 +15,10 @@ export default defineConfig({
     sidebar: [
       {
         text: 'Foundations',
-        items: [{ text: 'The Multicasting Problem', link: '/guide/fundamentals' }],
+        items: [
+          { text: 'The Multicasting Problem', link: '/guide/fundamentals' },
+          { text: 'The Subject Router Algebra', link: '/guide/router-algebra' },
+        ],
       },
       {
         text: 'The Classic Era (RxJS 4–6)',

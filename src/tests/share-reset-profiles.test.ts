@@ -184,6 +184,7 @@ for (const spec of PROFILES) {
   });
 }
 
+// #region invariants
 describe('cross-profile invariants', () => {
   it('post-terminal retention is governed only by the matching terminal flag - resetOnRefCountZero cannot evict a retained terminal Subject', () => {
     // [t,f,f]: complete, everyone leaves (refCount 0), yet the cache survives.
@@ -232,3 +233,4 @@ describe('cross-profile invariants', () => {
     c.sub.unsubscribe();
   });
 });
+// #endregion invariants

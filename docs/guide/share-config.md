@@ -18,6 +18,8 @@ share({
 - **`resetOnRefCountZero: false` keeps the upstream *connected* while nobody is subscribed.** Values keep flowing into the retained Subject during idle — exactly the `shareReplay` leak. Only `true` (or a notifier) disconnects and discards at zero.
 - **After a terminal event, only the matching terminal flag matters.** A Subject retained by `resetOnComplete: false` or `resetOnError: false` can never be evicted by subscribers leaving — the refCount-zero reset applies only *before* a terminal event.
 
+Both facts are consequences of the [Router Algebra partition law](/guide/router-algebra#two-amendments-the-specs-proved): each reset flag owns exactly one disjoint lifecycle regime.
+
 ## The 8 reset profiles
 
 The three booleans `[resetOnRefCountZero, resetOnComplete, resetOnError]` yield 8 profiles. All are algebraically valid; they are far from equally useful:
