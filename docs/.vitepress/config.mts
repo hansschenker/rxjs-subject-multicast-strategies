@@ -35,6 +35,7 @@ export default defineConfig({
           { text: 'connectable()', link: '/guide/connectable' },
           { text: 'connect()', link: '/guide/connect' },
           { text: 'share() with Config', link: '/guide/share-config' },
+          { text: 'Reset Flags Playground', link: '/guide/playground' },
           { text: 'Migration Guide', link: '/guide/migration' },
         ],
       },

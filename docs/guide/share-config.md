@@ -60,4 +60,4 @@ Expected output, first section: attempt&nbsp;#1 fails and A sees the error; B tr
 
 Start from the default. Reach for `[f, f, t]` + `ReplaySubject(1)` when the source is a finite fetch worth caching. Reach for `[t, f, f]` when terminal results should be cached for good but an abandoned in-flight stream should start over. Reach for `[f, f, f]` only when a retry would be *wrong*. If you find yourself wanting anything else, write down which of the three lifecycle events should discard state — the flags then write themselves.
 
-Every row of the table above is executable: `src/tests/share-reset-profiles.test.ts` pins all 8 profiles across the three lifecycle events (idle, complete, error) plus the two invariants at the top of this page — run `npm test`.
+Every row of the table above is executable: `src/tests/share-reset-profiles.test.ts` pins all 8 profiles across the three lifecycle events (idle, complete, error) plus the two invariants at the top of this page — run `npm test`. Or drive the profiles interactively in the [Reset Flags Playground](/guide/playground).

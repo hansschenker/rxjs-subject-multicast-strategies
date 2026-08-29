@@ -78,7 +78,7 @@ The invariants are executable — this is the exact code that pinned the two ame
 
 <<< ../../src/tests/share-reset-profiles.test.ts#invariants
 
-Run the full suite — all 8 profiles across all three regimes:
+The same machinery is interactive in the [Reset Flags Playground](/guide/playground) — toggle the flags and drive a live pipeline. Run the full suite — all 8 profiles across all three regimes:
 
 ```sh
 npm test
