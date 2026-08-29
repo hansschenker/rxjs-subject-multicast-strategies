@@ -1,6 +1,6 @@
 # The Subject Router Algebra
 
-The strategy pages describe what each operator *does*. This page gives the model that makes them all one thing: a **Subject is a network router**, and every multicasting API is an **administrative policy** wrapped around it. The model is distilled from the research notes behind this site and — where marked — amended by the repo's executable specs.
+The strategy pages describe what each operator *does*. This page gives the model that makes them all one thing: a **Subject is a network router**, and every multicasting API is an **administrative policy** wrapped around it. The model is distilled from the research notes behind this site and — where marked — amended by the repo's executable specs. The dense lookup version, including the 10 policy axes and the Custom Routing Blueprints, is the [Router Algebra Reference Sheet](/guide/cheatsheet-router-algebra).
 
 ## The paradigm shift
 

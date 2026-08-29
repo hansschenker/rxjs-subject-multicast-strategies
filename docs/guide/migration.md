@@ -1,5 +1,7 @@
 # Migration Guide — Legacy to Modern, Inside RxJS 7
 
+Looking for the compact lookup version? See the [Refactoring Cheat Sheet](/guide/cheatsheet-refactoring).
+
 **Scope: this is an intra-v7 modernization.** The legacy operators — `multicast`, `publish`, `publishBehavior`, `publishReplay`, `publishLast`, `refCount`, and `ConnectableObservable` — are deprecated in RxJS 7 but remain fully functional. The reason to migrate is that the modern APIs are semantically better: factory connectors eliminate the dead-subject trap, there is no `ConnectableObservable` cast to lose in a pipe, and reset behavior is explicit at the call site.
 
 ## The three-scenario rule

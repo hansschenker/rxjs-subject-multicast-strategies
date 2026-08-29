@@ -31,7 +31,7 @@ Two load-bearing results recur throughout the notes:
 
 - `notebooklm-chat-thoughts-expand-more…-2026-08-29.md` files are NotebookLM chat exports (YAML frontmatter, `## 引用来源` citation footer). Filenames are slugs of the answer's opening sentence, so they read as fragments.
 - `All_notes_8_29_2026.md` is fundamentals only (Subject dual identity, cold→hot multicasting), not a compilation of the corpus, and contains one section pasted twice.
-- Most exports cite "All notes 8/28/2026" as their primary source — **that file is not in the repo**. Two artifacts described as created — the "RxJS 7 Multicasting Refactoring Cheat Sheet" and the "Subject Router Algebra Reference Sheet" — exist only in NotebookLM's Studio panel and were never exported here.
+- Most exports cite "All notes 8/28/2026" as their primary source — **that file is not in the repo**. The two artifacts the notes describe as created in NotebookLM Studio (the "RxJS 7 Multicasting Refactoring Cheat Sheet" and the "Subject Router Algebra Reference Sheet") were never exported; they have been reconstructed as `docs/guide/cheatsheet-refactoring.md` and `docs/guide/cheatsheet-router-algebra.md`, spec-corrected, so the original exports are no longer needed.
 
 ## Spec-proven share() semantics (corrections to the research notes)
 

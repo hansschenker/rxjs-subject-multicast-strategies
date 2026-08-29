@@ -30,6 +30,13 @@ export default defineConfig({
         ],
       },
       {
+        text: 'Cheat Sheets',
+        items: [
+          { text: 'Refactoring Cheat Sheet', link: '/guide/cheatsheet-refactoring' },
+          { text: 'Router Algebra Reference', link: '/guide/cheatsheet-router-algebra' },
+        ],
+      },
+      {
         text: 'The Modern Era (RxJS 7)',
         items: [
           { text: 'connectable()', link: '/guide/connectable' },
